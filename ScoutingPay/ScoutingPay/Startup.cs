@@ -50,7 +50,7 @@ namespace ScoutingPay
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Payments}/{action=Create}/{id?}");
             });
         }
     }

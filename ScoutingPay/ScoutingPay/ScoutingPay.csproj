@@ -8,4 +8,10 @@
   <ItemGroup>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\ProductsViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Payments\" />
+  </ItemGroup>
 </Project>
