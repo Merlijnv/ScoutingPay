@@ -34,7 +34,7 @@ namespace ScoutingPay.Data.mssql
         
         public List<Person> GetAllActiveMembers()
         {
-            string query = "SELECT * FROM leden WHERE inactief = 1";
+            string query = "SELECT * FROM leden WHERE actief = 1";
             List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>();
             DataSet results = ExecuteMssql(query, parameters);
             List<Person> members = new List<Person>();

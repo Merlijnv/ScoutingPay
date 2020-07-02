@@ -31,7 +31,7 @@ namespace ScoutingPay.Controllers
         // GET: /<controller>/Create
         public IActionResult Create()
         {
-            Person person = new Person(1, "Merlijn Vermeer", "merlijnvermeer@gmail.com");
+            Person person = new Person(1, "Merlijn Vermeer", "merlijnvermeer@gmail.com",1);
             PaymentRequest model = new PaymentRequest(person, new List<Product>());
             return View(model);
         }

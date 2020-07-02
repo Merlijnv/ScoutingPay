@@ -13,11 +13,14 @@
     <Compile Remove="Models\ProductsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\repositories" />
     <Folder Include="Views\Payments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Payments\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Person\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

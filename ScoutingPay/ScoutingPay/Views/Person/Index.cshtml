@@ -1,0 +1,14 @@
+﻿@model PersonListViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+@foreach (Person p in Model.Persons)
+{
+    <h4>@p.BonNr @p.Name, @p.Mail, @p.Active </h4>
+    
+}
