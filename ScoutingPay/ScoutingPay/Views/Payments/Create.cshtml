@@ -1,4 +1,4 @@
-﻿@model ScoutingPay.Models.PaymentRequest
+﻿@model ScoutingPay.Models.PaymentRequestCreateViewmodel
 
 @{
     ViewData["Title"] = "Create";
@@ -6,35 +6,26 @@
 
 <h2>Create</h2>
 
-<h4>@Model.Person.BonNr - @Model.Person.Name</h4>
+<h4>@Model.Request.Person.BonNr - @Model.Request.Person.Name</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @foreach(var productItem in Model.ProductOverview)
+            {
+                <div class="form-group">
+                    <label class="control-label">@productItem.ProductName</label>
+                    <input asp-for="@productItem" value="0" class="form-control" onload="this.select()"/>
+                    <span asp-validation-for="@productItem" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
-                <label asp-for="Fris" class="control-label"></label>
-                <input asp-for="Fris" class="form-control" onload="this.select()"/>
-                <span asp-validation-for="Fris" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Bier" class="control-label"></label>
-                <input asp-for="Bier" class="form-control" />
-                <span asp-validation-for="Bier" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Chips" class="control-label"></label>
-                <input asp-for="Chips" class="form-control" />
-                <span asp-validation-for="Chips" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tosti" class="control-label"></label>
-                <input asp-for="Tosti" class="form-control" />
-                <span asp-validation-for="Tosti" class="text-danger"></span>
+                <input value="@Model.PersonIndex" type="hidden"/>
             </div>
             <div class="form-group row">
-                <input type="submit" value="Skip" class="btn btn-secondary col m-2" />
-                <input type="submit" value="Next" class="btn btn-primary col m-2" />
+                <input type="submit" asp-action="Skip" value="Skip" class="btn btn-secondary col m-2" />
+                <input type="submit" asp-action="Next" value="Next" class="btn btn-primary col m-2" />
 
             </div>
             <div class="form-group">

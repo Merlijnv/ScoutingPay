@@ -1,15 +1,18 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace ScoutingPay.Models
 {
     public class Product
     {
         public int Id { get; set; }
         public string ProductName { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int Count { get; set; }
 
 
-        public Product(int id, string productName, double price)
+        [JsonConstructor]
+        public Product(int id, string productName, decimal price)
         {
             Id = id;
             ProductName = productName;
@@ -17,12 +20,14 @@ namespace ScoutingPay.Models
         }
 
 
-        public Product(int id, string productName, double price, int count)
+        public Product(int id, string productName, decimal price, int count)
         {
             Id = id;
             ProductName = productName;
             Price = price;
             Count = count;
         }
+        
+        
     }
 }

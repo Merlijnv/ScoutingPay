@@ -7,25 +7,25 @@ namespace ScoutingPay.Models
     {
         public DateTime Date = DateTime.Now;
         public Person Person;
-        public int Fris { get; set; } = 0;
-        public int Bier { get; set; } = 0;
-        public int Chips { get; set; } = 0;
-        public int Tosti { get; set; } = 0;
-        public List<Product> Products = new List<Product>();
+        public List<Product> ProductList = new List<Product>();
         public string RequestURL { get; set; }
-        public double PriceTotal { get { return calculateTotal(); } }
+        public decimal PriceTotal => CalculateTotal();
 
+        public PaymentRequest()
+        {
+            ProductList = new List<Product>();
+        }
         public PaymentRequest(Person person, List<Product> products)
         {
             Person = person;
-            Products = products;
+            ProductList = products;
         }
 
 
-        private double calculateTotal()
+        private decimal CalculateTotal()
         {
-            double total = new double();
-            foreach (Product prod in Products)
+            decimal total = new decimal();
+            foreach (Product prod in ProductList)
             {
                 total +=  prod.Count * prod.Price;
             }

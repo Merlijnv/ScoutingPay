@@ -24,6 +24,12 @@ namespace ScoutingPay
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(600);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +50,8 @@ namespace ScoutingPay
 
             app.UseRouting();
 
+            app.UseSession();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
