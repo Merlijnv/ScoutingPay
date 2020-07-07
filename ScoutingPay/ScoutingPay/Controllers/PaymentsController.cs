@@ -22,6 +22,8 @@ namespace ScoutingPay.Controllers
         private readonly PersonRetRepository _personRetRepository;
         private readonly IProductRetrieveContext _iProductRetrieveContext;
         private readonly ProductRetRepository _productRetRepository;
+        private readonly IPersonSaveContext _iPersonSaveContext;
+        private readonly PersonSaveRepository _personSaveRepository;
 
         public PaymentsController(ILogger<PaymentsController> logger, IConfiguration configuration)
         {
@@ -31,6 +33,8 @@ namespace ScoutingPay.Controllers
             _productRetRepository = new ProductRetRepository(_iProductRetrieveContext);
             _iPersonRetContext = new PersonMssqlContext(connectionString);
             _personRetRepository = new PersonRetRepository(_iPersonRetContext);
+            _iPersonSaveContext = new PersonMssqlContext(connectionString);
+            _personSaveRepository = new PersonSaveRepository(_iPersonSaveContext);
         }
 
 
@@ -45,7 +49,7 @@ namespace ScoutingPay.Controllers
         public IActionResult Create(PaymentRequestCreateViewmodel viewmodel)
         {
             List<Person> persons = _personRetRepository.GetAllActive();
-            List<Product> products = new List<Product>();// _productRetRepository.GetAll(); //;
+            List<Product> products = new List<Product>(); 
             if (HttpContext.Session.GetComplexData<List<Product>>("productList") != null)
             {
                 viewmodel.ProductOverview = HttpContext.Session.GetComplexData<List<Product>>("productList");
@@ -69,8 +73,6 @@ namespace ScoutingPay.Controllers
             
             if (viewmodel.ProductOverview.Count == 0)
             {
-                //List<Product> products = _productRetRepository.GetAll();
-                
                 viewmodel = new PaymentRequestCreateViewmodel(personenIndex,products,persons);
             }
             
@@ -96,7 +98,25 @@ namespace ScoutingPay.Controllers
 
         public IActionResult Skip(PaymentRequestCreateViewmodel viewmodel) //Put person as Inactive and to next person
         {
+            Person person = new Person();
             //Set to inactive
+            if (HttpContext.Session.GetInt32("personenIndex") != null)
+            {
+                List<Person> persons = _personRetRepository.GetAllActive();
+                viewmodel.PersonIndex = (int) HttpContext.Session.GetInt32("personenIndex");
+                person = persons[viewmodel.PersonIndex];
+            }
+
+            if (person.BonNr != null)
+            {
+                person.changeActivity();
+                _personSaveRepository.UpdatePerson(person);
+            }
+
+
+            viewmodel.NextIndex();
+            HttpContext.Session.SetInt32("personenIndex",viewmodel.PersonIndex);
+
             return RedirectToAction("Create",viewmodel);
         }
 

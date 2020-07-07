@@ -6,7 +6,7 @@ using ScoutingPay.Models;
 
 namespace ScoutingPay.Data.mssql
 {
-    public class PersonMssqlContext : BaseMssqlContext, IPersonRetrieveContext
+    public class PersonMssqlContext : BaseMssqlContext, IPersonRetrieveContext, IPersonSaveContext
     {
         public PersonMssqlContext(string connString) : base(connString)
         {
@@ -48,6 +48,18 @@ namespace ScoutingPay.Data.mssql
                 }
             }
             return members;
+        }
+
+        public void UpdateMemberByBonNr(Person p)
+        {
+            string query = "UPDATE leden SET naam = @name, email = @email, actief = @active WHERE id = @bonnr";
+            List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>();
+            parameters.Add(new KeyValuePair<string, string>("bonnr",p.BonNr.ToString()));
+            parameters.Add(new KeyValuePair<string, string>("name",p.Name));
+            parameters.Add(new KeyValuePair<string, string>("email",p.Mail));
+            parameters.Add(new KeyValuePair<string, string>("active",p.Active.ToString()));
+            ExecuteMssql(query, parameters);
+            
         }
 
     }

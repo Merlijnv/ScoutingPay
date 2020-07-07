@@ -5,6 +5,12 @@ namespace ScoutingPay.Models
 {
     public class Person
     {
+        
+        public Person()
+        {
+            
+        }
+        
         public Person(int bonNr, string name, string mail,byte active)
         {
             BonNr = bonNr;
@@ -21,6 +27,18 @@ namespace ScoutingPay.Models
             Mail = mail;
             Active = active;
             PaymentRequests = paymentRequests;
+        }
+
+        public void changeActivity()
+        {
+            if (Active == 0)
+            {
+                Active = 1;
+            }
+            else if (Active == 1)
+            {
+                Active = 0;
+            }
         }
 
         public int BonNr { get; set; }
