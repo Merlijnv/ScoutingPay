@@ -75,11 +75,22 @@ namespace ScoutingPay.Controllers
             {
                 viewmodel = new PaymentRequestCreateViewmodel(personenIndex,products,persons);
             }
+
+            if (persons.Count > viewmodel.PersonIndex)
+            {
+                Person person = persons[viewmodel.PersonIndex];
+                PaymentRequest model = new PaymentRequest(person, viewmodel.ProductOverview);
+                viewmodel.SetModel(model);
+                return View(viewmodel);
+            }
+            else
+            {
+                HttpContext.Session.Remove("personenIndex");
+                HttpContext.Session.Remove("productList");
+                return RedirectToAction("Index","Home");
+            }
             
-            Person person = persons[viewmodel.PersonIndex];
-            PaymentRequest model = new PaymentRequest(person, viewmodel.ProductOverview);
-            viewmodel.SetModel(model);
-            return View(viewmodel);
+            
         }
 
         
