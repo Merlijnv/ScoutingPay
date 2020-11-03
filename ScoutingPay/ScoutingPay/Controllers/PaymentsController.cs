@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Common;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -89,8 +88,6 @@ namespace ScoutingPay.Controllers
                 HttpContext.Session.Remove("productList");
                 return RedirectToAction("Index","Home");
             }
-            
-            
         }
 
         
@@ -110,7 +107,7 @@ namespace ScoutingPay.Controllers
         public IActionResult Skip(PaymentRequestCreateViewmodel viewmodel) //Put person as Inactive and to next person
         {
             Person person = new Person();
-            //Set to inactive
+            
             if (HttpContext.Session.GetInt32("personenIndex") != null)
             {
                 List<Person> persons = _personRetRepository.GetAllActive();
@@ -123,8 +120,6 @@ namespace ScoutingPay.Controllers
                 person.changeActivity();
                 _personSaveRepository.UpdatePerson(person);
             }
-
-
             viewmodel.NextIndex();
             HttpContext.Session.SetInt32("personenIndex",viewmodel.PersonIndex);
 
